@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="workshop">
+
+
+   <link name="world"/>
+
+    <link name="cube_link">
+    <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+        <box size="0.5 0.5 0.5"/>
+        </geometry>
+        <material name="gray">
+        <color rgba="0.6 0.6 0.6 1"/>
+        </material>
+    </visual>
+    <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+        <box size="0.5 0.5 0.5"/>
+        </geometry>
+    </collision>
+    <inertial>
+        <mass value="2.0"/>
+        <inertia ixx="0.02" ixy="0.0" ixz="0.0" iyy="0.02" iyz="0.0" izz="0.02"/>
+    </inertial>
+    </link>
+
+    <joint name="world_to_cube" type="fixed">
+        <parent link="world"/>
+        <child link="cube_link"/>
+        <origin xyz="0 0 0.25" rpy="0 0 0"/>
+    </joint>
+    <!--Alternative cube link for an elevator-->
+    <!-- 
+    <joint name="world_to_cube" type="prismatic">
+        <parent link="world"/>
+        <child link="cube_link"/>
+        <origin xyz="0 0 0.25" rpy="0 0 0"/>
+        <axis xyz="0 0 1" rpy="0 0 0"/>
+        <limit upper="3" lower="0"/>
+    </joint>
+    -->
+
+    <xacro:include filename="$(find ur_description)/urdf/ur_macro.xacro"/>
+    <xacro:include filename="$(find workshop_robot_description)/urdf/ur.ros2_control.xacro" />
+
+    <xacro:arg name="ur_type" default="ur10e"/>
+
+    <!-- parameters for ur -->
+    <xacro:arg name="tf_prefix" default="" />
+    <xacro:arg name="joint_limit_params" default="$(find ur_description)/config/$(arg ur_type)/joint_limits.yaml"/>
+    <xacro:arg name="kinematics_params" default="$(find ur_description)/config/$(arg ur_type)/default_kinematics.yaml"/>
+    <xacro:arg name="physical_params" default="$(find ur_description)/config/$(arg ur_type)/physical_parameters.yaml"/>
+    <xacro:arg name="visual_params" default="$(find ur_description)/config/$(arg ur_type)/visual_parameters.yaml"/>
+    <xacro:arg name="transmission_hw_interface" default=""/>
+    <xacro:arg name="safety_limits" default="false"/>
+    <xacro:arg name="safety_pos_margin" default="0.15"/>
+    <xacro:arg name="safety_k_position" default="20"/>
+    <xacro:arg name="force_abs_paths" default="false" />
+
+    <xacro:ur_robot
+        name="ur10e"
+        tf_prefix="$(arg tf_prefix)"
+        parent="cube_link"
+        joint_limits_parameters_file="$(arg joint_limit_params)"
+        kinematics_parameters_file="$(arg kinematics_params)"
+        physical_parameters_file="$(arg physical_params)"
+        visual_parameters_file="$(arg visual_params)"
+        safety_limits="$(arg safety_limits)"
+        safety_pos_margin="$(arg safety_pos_margin)"
+        safety_k_position="$(arg safety_k_position)"
+        force_abs_paths="$(arg force_abs_paths)"
+        >
+        <origin xyz="0 0 0.25" rpy="0 0 0" />         
+    </xacro:ur_robot>
+
+    
+
+    <link name="camera_link">
+    <visual>
+        <origin xyz="0.05 0 0.06" rpy="0 0 0"/>
+        <geometry>
+        <box size="0.06 0.03 0.04"/>
+        </geometry>
+        <material name="black">
+        <color rgba="0.05 0.05 0.05 1"/>
+        </material>
+    </visual>
+    </link>
+
+    <joint name="ee_to_camera" type="fixed">
+        <parent link="tool0"/>
+        <child link="camera_link"/>
+        <origin xyz="0.05 0 0.06" rpy="0 0 0"/>
+    </joint>
+
+    <xacro:ur_ros2_control
+        name="ur10e"
+        tf_prefix="$(arg tf_prefix)"
+        kinematics_parameters_file="$(arg kinematics_params)"
+        transmission_hw_interface="$(arg transmission_hw_interface)"
+  />
+
+    </robot>
