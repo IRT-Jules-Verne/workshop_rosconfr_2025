@@ -8,7 +8,7 @@
 4. Suivre les instructions : https://docs.ros.org/en/jazzy/Installation/Ubuntu-Install-Debs.html (Changer en fonction de votre version Ubuntu) jusqu'à la fin de l'installation (Avant Setup Environment)
 5. sudo rosdep init
 6. rosdep update
-7. sudo apt install ros-__**distro**__-moveit ros-__**distro**__-ur-driver ros-__**distro**__-rqt-controller-manager
+7. sudo apt install ros-__**distro**__-moveit ros-__**distro**__-ur-robot-driver ros-__**distro**__-rqt-controller-manager
 (Changer distro par votre version de ROS)
 
 ### Si vous avez besoin d'un IDE :
