@@ -15,4 +15,4 @@
 Installer : https://code.visualstudio.com/
 
 ### DOC
-Tout les excercies et slides sont disponibles dans le dossier DOC
+Tout les excercices et slides sont disponibles dans le dossier DOC
