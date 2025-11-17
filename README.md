@@ -1,4 +1,7 @@
 # WORKSHOP ROSCON France 2025
+### Pour windows :
+1. Installer : https://git-scm.com/install/windows
+
 
 ### Si vous êtes en avance :
 
