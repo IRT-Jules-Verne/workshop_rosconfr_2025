@@ -9,6 +9,7 @@
 5. sudo rosdep init
 6. rosdep update
 7. sudo apt install ros-__**distro**__-moveit ros-__**distro**__-ur-driver ros-__**distro**__-rqt-controller-manager
+(Changer distro par votre version de ROS)
 
 ### Si vous avez besoin d'un IDE :
 Installer : https://code.visualstudio.com/
